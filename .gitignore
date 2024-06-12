@@ -1,0 +1,7 @@
+node_modules
+
+# listarUsuario.cy.js
+# pesquisaUsuarioID.cy.js
+# promoverAdmin.cy.js
+# registrarUsuario.cy.js
+# reviewFilme.cy.js
