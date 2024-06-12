@@ -1,7 +1,7 @@
 [
     {
         "id": 1,
-        "title": "harry potter e a pedra filosofal",
+        "title": "Harry Potter e a Pedra Filosofal",
         "genre": "Aventura e ação",
         "description": "Harry Potter é um garoto órfão que vive infeliz com seus tios, os Dursleys. Ele recebe uma carta contendo um convite para ingressar em Hogwarts, uma famosa escola especializada em formar jovens bruxos.",
         "durationInMinutes": 152,
@@ -9,7 +9,7 @@
     },
     {
         "id": 2,
-        "title": "harry potter e a camera secreta",
+        "title": "Harry Potter e a Camera Secreta",
         "genre": "Aventura e Ação",
         "description": "Após as sofríveis férias na casa dos tios, Harry Potter se prepara para voltar a Hogwarts e começar seu segundo ano na escola de bruxos",
         "durationInMinutes": 161,

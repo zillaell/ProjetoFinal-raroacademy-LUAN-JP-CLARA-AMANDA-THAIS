@@ -67,7 +67,7 @@ Cypress.Commands.add('promoverCritico', (token) => {
 Cypress.Commands.add('promoverAdmin', function (token) {
     return cy.request({
         method: 'PATCH',
-        url: '/api/users/admin',
+        url: 'https://raromdb-3c39614e42d4.herokuapp.com/api/users/admin',
         headers: {
             Authorization: 'Bearer ' + token
         }
@@ -77,7 +77,7 @@ Cypress.Commands.add('criarFilme', function (token) {
     return cy.fixture('criaFilme.json').then(function (filmeCriado) {
         cy.request({
             method: 'POST',
-            url: '/api/movies',
+            url: 'https://raromdb-3c39614e42d4.herokuapp.com/api/movies',
             headers: {
                 Authorization: 'Bearer ' + token
             },
@@ -88,6 +88,19 @@ Cypress.Commands.add('criarFilme', function (token) {
         });
     });
 });
+Cypress.Commands.add('criarFilme2', function (token) {
+    return cy.fixture('criaFilme.json').then(function (filmeCriado) {
+        cy.request({
+            method: 'POST',
+            url: 'https://raromdb-3c39614e42d4.herokuapp.com/api/movies',
+            headers: {
+                Authorization: 'Bearer ' + token
+            },
+            body: filmeCriado,
+        });
+    });
+})
+
 Cypress.Commands.add('criarReview', function (token, idFilme) {
     return cy.request({
         method: 'POST',
@@ -114,7 +127,7 @@ Cypress.Commands.add('buscarFilmeId', function(id, token){
 Cypress.Commands.add('deletaUsuario', function (id, token) {
     return cy.request({
         method: 'DELETE',
-        url: '/api/users/' + id,
+        url: 'https://raromdb-3c39614e42d4.herokuapp.com/api/users/' + id,
         headers: {
             Authorization: 'Bearer ' + token
         }

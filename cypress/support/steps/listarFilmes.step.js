@@ -7,26 +7,26 @@ var email = faker.internet.email().toLowerCase();
 var senha = '123456';
 var id;
 var token;
-var movieId;
+var token1;
+var movieid
+//var idFilmeNovo;
 
 before(()=>{
     cy.registroUser(nome, email, senha).then((response)=>{
         id = response.body.id;
     })
     cy.logarUser(email, senha).then((response)=>{
-        token = response.body.accessToken;
-        cy.promoverAdmin(token);
-        cy.criarFilme(token).then((response)=>{
-            movieId = response.body.id;
-        });
+        token1 = response.body.accessToken;
+        cy.promoverAdmin(token1);
+        cy.criarFilme2(token1);
     });
 });
 
 after(()=>{
-    //cy.deleteFilme(movieId, token);
-    //cy.deletaUsuario(id,token);
+    //cy.deleteFilme(movieId, token1);
+    //cy.deletaUsuario(id,token1);
 });
-
+// 01: deve ser possível Listar Filmes com sucesso sem estar autenticado
 Given('que o usuário acessa o site',()=>{
     cy.intercept('GET', '/api/movies', {
         statusCode: 200,
@@ -35,13 +35,61 @@ Given('que o usuário acessa o site',()=>{
     cy.visit('');
 });
 When('acessa a funcionalidade de Listar Filmes',()=>{
-    cy.url('').should('equal','https://raromdb-frontend-c7d7dc3305a0.herokuapp.com');
+    cy.url('').should('equal','https://raromdb-frontend-c7d7dc3305a0.herokuapp.com/');
 });
 Then('deve ser possível Listar Filmes',()=>{
-    cy.wait('@getMovies');
+    cy.wait('@filmesMock');
     cy.get(paginaListarFilmes.carrosselFilmes).should('be.visible');
 });
+// 02: deve ser possível Listar Filmes com sucesso estando autenticado
+Given('que está autenticado no site',()=>{
+    cy.intercept('POST', '/api/auth/login').as('loginUser');
+    paginaListarFilmes.clickLinkLogin();
+    paginaListarFilmes.typeLogin(email, senha);
+    cy.wait('@loginUser');
+});
+// 03: deve ser possível Listar Filmes e ver as informações do filme
 
-// Given('',()=>{
-
-// });
+Then('deve ser possível ver as informações correspondentes de um filme',()=>{
+    paginaListarFilmes.inspecionaMovieCard();
+});
+// 04: deve ser possível  visualizar o Listar Filmes Por ordem de cadastro
+When('identifica o cabeçario de filmes em destaque',()=>{
+    cy.get(paginaListarFilmes.cabecalhoFD).should('be.visible');
+});
+Then('deve ser possível Listar Filmes por ordem de cadastro',()=>{
+    paginaListarFilmes.inspecionaMoviesDestaque();
+});
+// 05: deve ser possível  visualizar o Listar Filmes Por ordem de nota
+When('identifica o cabeçario de filmes bem avaliados',()=>{
+    cy.get(paginaListarFilmes.cabecalhoBA).should('be.visible');
+});
+Then('deve ser possível Listar Filmes por ordem de nota',()=>{
+    paginaListarFilmes.inspecionaMoviesTop();
+});
+// 06: deve ser possível visualizar o Listar Filmes em destaque e explora-los em otra paginação
+Then('deve ser possível explorar os filmes em destaque em outra paginação',()=>{
+    paginaListarFilmes.clickAvancaFD();
+    paginaListarFilmes.inspecionaMoviesDestaqueP2();
+});
+// 07: deve ser possível visualizar o Listar filmes bem avaliados e explora-los em otra paginação
+Then('deve ser possível explorar os filmes bem avaliados em outra paginação',()=>{
+    paginaListarFilmes.clickAvancaBA();
+    paginaListarFilmes.inspecionaMoviesTop();
+});
+// 08: deve ser possível consultar mais detalhes de um filme
+When('escolher um filme para saber detalhes',()=>{
+    paginaListarFilmes.clickMovieCard();
+});
+Then('deve ser possível ver os detalhes do filme',()=>{
+    cy.url('').should('equal','https://raromdb-frontend-c7d7dc3305a0.herokuapp.com/movies/');
+    cy.get(paginaListarFilmes.movieTitle);
+    cy.get(paginaListarFilmes.avaliacaoAudiencia).should('be.visible');
+    cy.get(paginaListarFilmes.avaliacaoCritica).should('be.visible');
+    cy.get(paginaListarFilmes.movieDescription)
+    cy.get(paginaListarFilmes.movieData).should('be.visible');
+    cy.get(paginaListarFilmes.movieGenero).should('be.visible');
+    cy.get(paginaListarFilmes.movieTempo).should('be.visible');
+    cy.get(paginaListarFilmes.movieImagem).should('be.visible');
+    //paginaListarFilmes.inspecionaDetalhes();
+});

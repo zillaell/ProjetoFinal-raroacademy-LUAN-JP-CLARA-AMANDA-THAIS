@@ -87,7 +87,7 @@ Cenário: tentativa de registrar usuário com formato inválido com fonte altern
   E informar uma nova senha
   E confirmar operação
   Então o usuário não deverá ser cadastrado
-  ###########################
+
 Cenário: tentativa de registrar usuário com formato inválido sem @
   Quando informar um novo nome
   E informar um novo e-mail sem @
@@ -112,12 +112,14 @@ Cenário: tentativa de registrar usuário com email com 4 dígitos
   E informar uma nova senha
   E confirmar operação
   Então o usuário não deverá ser cadastrado
-#Cenário: tentativa de registrar usuário com email com mais de 4 dígitos
+##################################### BUG ###############################
+Cenário: tentativa de registrar usuário com email com 5 dígitos
   Quando informar um novo nome
   E informar um novo e-mail com 5 digitos
   E informar uma nova senha
   E confirmar operação
   Então o usuário deverá ser cadastrado
+#########################################################################
 Cenário: tentativa de registrar usuário com email com 60 dígitos
   Quando informar um novo nome
   E informar um novo e-mail com 60 digitos
@@ -172,17 +174,16 @@ Cenário: tentativa de registrar usuário com senha com 13 dígitos
   E informar uma nova senha com 13 digitos
   E confirmar operação
   Então o usuário deverá ser cadastrado
-
-####################################################################
+#########################################################################
+#########################################################################
 #CENARIOS ADICIONAIS:
 # 悲しみ - funciona no nome, email e senha
 # ♞👽 - funciona no nome e senha
 # ♞👽 - não funciona no email.
 # 🅒🅐🅝🅘🅑🅐🅛 - funciona no nome e senha
 # 🅒🅐🅝🅘🅑🅐🅛 - não funciona no email.
-
-####################################################################
-####################################################################
+########################################################################
+########################################################################
 
                        # TORNAR USUARIO ADMIN
 
@@ -227,8 +228,8 @@ Cenário: Não deve ser possível tornar usuario em admin sem que esteja autenti
   Quando confirmar operação
   Então o usuário não deverá se tornar admin
 
-####################################################################
-####################################################################
+#########################################################################
+#########################################################################
 
                           # LISTAR USUÀRIO
 
@@ -328,8 +329,8 @@ Cenário: não deve ser possível acessar o Pesquisar outro usuario por id sem e
   E não deve aparecer suas informações
 
 
-####################################################################
-####################################################################
+###################################################################################
+###################################################################################
 
                             # REVIEW DE FILME 
 
@@ -361,13 +362,13 @@ Cenário: deve ser possível fazer review de filme com nota e texto de 500 carac
   E que é um usuario do tipo comum
   Quando fizer a review de filme com texto com 500 caracteres
   Então deve ser possível fazer a review de um filme
-
+################################## BUG ############################################
 Cenário: deve ser possível fazer review de filme somente com nota
   Dado que está autenticado no site
   E que é um usuario do tipo comum
   Quando fizer a review de filme só com nota
   Então deve ser possível fazer a review de um filme
-
+###################################################################################
 Cenário: deve ser possível fazer review de filme com nota 1
   Dado que está autenticado no site
   E que é um usuario do tipo comum
@@ -387,7 +388,7 @@ Cenário: não deve ser possível criar 2 reviews de um filme por usuário, apen
   Então não deve ser possível criar a review de um filme 2 vezes
   Mas deve atualizar
 
-################################## BAD REQUEST ###################################
+################################## BAD REQUEST ####################################
 
 Cenário: não deve ser possível fazer review de filme sem estar autenticado
   Dado que é um usuario do tipo comum
@@ -412,11 +413,13 @@ Cenário: não deve ser possível fazer review de filme com nota 6
   Quando fizer a review de filme com nota 6
   Então não deve ser possível fazer a review de um filme
 
+#################################### BUG ##########################################
 Cenário: não deve ser possível fazer review de filme com nota sem ser valor inteiro
   Dado que está autenticado no site
   E que é um usuario do tipo comum
   Quando fizer a review de filme com nota 2.5
   Então não deve ser possível fazer a review de um filme
+###################################################################################
 
 Cenário: não deve ser possível fazer review de filme texto com 501 caracteres.
   Dado que está autenticado no site
@@ -424,8 +427,8 @@ Cenário: não deve ser possível fazer review de filme texto com 501 caracteres
   Quando fizer a review de filme com texto com 501 caracteres
   Então não deve ser possível fazer a review de um filme
 
-####################################################################
-####################################################################
+###################################################################################
+###################################################################################
 
 
 4. Ao escrever uma avaliação, os detalhes devem ser refletidos imediatamente
