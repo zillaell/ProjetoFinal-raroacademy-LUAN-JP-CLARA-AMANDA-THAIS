@@ -108,7 +108,7 @@ describe('Cenários de testes de tornar usuário Administrador', () => {
                 method: 'PATCH',
                 url: '/api/users/admin',
                 headers: {
-                    //Authorization: 'Bearer ' + token
+                    Authorization: 'Bearer '
                 },
                 failOnStatusCode: false
 

@@ -59,7 +59,7 @@ Cenário: deve ser possível consultar mais detalhes de um filme bem avaliado
   Então deve ser possível ver os detalhes do filme bem avaliados
 
 
-#################### BAD REQUEST ###################################
+#################### REGRAS DE NEGOCIO ###################################
 
 # 1. Qualquer tipo de usuário, logado ou não, pode consultar a lista de filmes
 # sem restrições;

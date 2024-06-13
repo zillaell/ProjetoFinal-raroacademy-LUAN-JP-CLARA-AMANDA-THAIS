@@ -15,7 +15,7 @@ describe('testes da rota de registro de usuário', () => {
     var token;
   
     context('testes de registro de usuário', () => {
-        it('registro de usuário', () => {
+        it('deve ser possível registrar usuário com sucesso', () => {
             cy.request({
                 method: "POST",
                 url: '/api/users',
@@ -33,7 +33,7 @@ describe('testes da rota de registro de usuário', () => {
                 expect(response.body.active).to.equal(true)
             })
         })
-        it('validar o tipo de usuário criado', () => {
+        it('deve ser possível validar o tipo de usuário criado', () => {
             cy.request({
                 method: "POST",
                 url: '/api/users',
@@ -51,7 +51,7 @@ describe('testes da rota de registro de usuário', () => {
                 expect(response.body.active).to.equal(true)
             })
         })
-        it('tentativa de registrar usuário com emoji no nome ', () => {
+        it('deve ser possível de registrar usuário com emoji no nome ', () => {
             cy.request({
                 method: "POST",
                 url: '/api/users',
@@ -73,7 +73,7 @@ describe('testes da rota de registro de usuário', () => {
                 expect(response.body.active).to.equal(true)
             })
         })
-        it('ventativa de registrar usuário com emoji na senha ', () => {
+        it('deve ser possível registrar usuário com emoji na senha ', () => {
             cy.request({
                 method: "POST",
                 url: '/api/users',
@@ -95,7 +95,7 @@ describe('testes da rota de registro de usuário', () => {
                 expect(response.body.active).to.equal(true)
             })
         })
-        it('tentativa de registrar usuário com alfabeto alternativo no nome, email e senha', () => {
+        it('deve ser possível registrar usuário com alfabeto alternativo no nome, email e senha', () => {
             cy.request({
                 method: "POST",
                 url: '/api/users',
@@ -117,7 +117,7 @@ describe('testes da rota de registro de usuário', () => {
                 expect(response.body.active).to.equal(true)
             })
         })
-        it('tentativa de registrar usuário com fonte alternativa no nome e senha', () => {
+        it('deve ser possível registrar usuário com fonte alternativa no nome e senha', () => {
             cy.request({
                 method: "POST",
                 url: '/api/users',
@@ -140,7 +140,7 @@ describe('testes da rota de registro de usuário', () => {
             })
         })
 /////////////////////////////////////////BUG/////////////////////////////////////////////
-it.only('deve ser possível registrar usuário com email com 5 dígitos', () => {
+it('deve ser possível registrar usuário com email com 5 dígitos', () => {
     cy.request({
         method: "POST",
         url: '/api/users',
@@ -163,7 +163,7 @@ it.only('deve ser possível registrar usuário com email com 5 dígitos', () => 
 })
 /////////////////////////////////////////////////////////////////////////////////////////
 
-        it('tentativa de registrar usuário com email com 60 dígitos', () => {
+        it('deve ser possível registrar usuário com email com 60 dígitos', () => {
             cy.request({
                 method: "POST",
                 url: '/api/users',
@@ -185,7 +185,7 @@ it.only('deve ser possível registrar usuário com email com 5 dígitos', () => 
                 expect(response.body.active).to.equal(true)
             })
         })
-        it('tentativa de registrar usuário com nome com 1 dígito', () => {
+        it('deve ser possível registrar usuário com nome com 1 dígito', () => {
             cy.request({
                 method: "POST",
                 url: '/api/users',
@@ -207,7 +207,7 @@ it.only('deve ser possível registrar usuário com email com 5 dígitos', () => 
                 expect(response.body.active).to.equal(true)
             })
         })
-        it('tentativa de registrar usuário com nome com 100 dígitos', () => {
+        it('deve ser possível registrar usuário com nome com 100 dígitos', () => {
             cy.request({
                 method: "POST",
                 url: '/api/users',
@@ -229,7 +229,7 @@ it.only('deve ser possível registrar usuário com email com 5 dígitos', () => 
                 expect(response.body.active).to.equal(true)
             })
         })
-        it('tentativa de registrar usuário com senha com 6 dígitos', () => {
+        it('deve ser possível registrar usuário com senha com 6 dígitos', () => {
             cy.request({
                 method: "POST",
                 url: '/api/users',
@@ -251,7 +251,7 @@ it.only('deve ser possível registrar usuário com email com 5 dígitos', () => 
                 expect(response.body.active).to.equal(true)
             })
         })
-        it('tentativa de registrar usuário com senha com 12 dígitos', () => {
+        it('deve ser possível registrar usuário com senha com 12 dígitos', () => {
             cy.request({
                 method: "POST",
                 url: '/api/users',
@@ -275,11 +275,11 @@ it.only('deve ser possível registrar usuário com email com 5 dígitos', () => 
         })
     })
 ////////////////////////////BAD REQUEST/////////////////////////////
-    describe('BAD REQUEST: ',()=>[
+    describe('Cenários de BAD REQUEST: ',()=>[
         before(function () {
             cy.registroUser(nome, email, senha);
           }),
-        it('tentativa de registrar usuário sem inserir o campo nome',()=>{
+        it('não deve ser possível registrar usuário sem inserir o campo nome',()=>{
             cy.request({
                 method: "POST",
                 url: '/api/users',
@@ -296,7 +296,7 @@ it.only('deve ser possível registrar usuário com email com 5 dígitos', () => 
                 });
             })
         }),
-        it('tentativa de registrar usuário sem inserir o campo email',()=>{
+        it('não deve ser possível registrar usuário sem inserir o campo email',()=>{
             cy.request({
                 method: "POST",
                 url: '/api/users',
@@ -308,12 +308,12 @@ it.only('deve ser possível registrar usuário com email com 5 dígitos', () => 
             }).then((response) => {
                 expect(response.status).to.be.eq(400)
                 expect(response.body).to.be.an('object');
-                cy.fixture('emailVazio.json').then(function (emailVazio) {
+                cy.fixture('emailVazios.json').then(function (emailVazio) {
                     expect(response.body).to.deep.eq(emailVazio)
                 });
             })
         }),
-        it('tentativa de registrar usuário sem inserir o campo senha',()=>{
+        it('não deve ser possível registrar usuário sem inserir o campo senha',()=>{
             cy.request({
                 method: "POST",
                 url: '/api/users',
@@ -331,7 +331,7 @@ it.only('deve ser possível registrar usuário com email com 5 dígitos', () => 
                 });
             })
         }),
-        it('tentativa de registrar usuário com email já cadastrado',()=>{
+        it('não deve ser possível registrar usuário com email já cadastrado',()=>{
             cy.request({
                 method: "POST",
                 url: '/api/users',
@@ -345,7 +345,7 @@ it.only('deve ser possível registrar usuário com email com 5 dígitos', () => 
                 });
             })
         }),
-        it('tentativa de registrar usuário com formato inválido com fonte alternativa concatenada no email',()=>{
+        it('não deve ser possível registrar usuário com formato inválido com fonte alternativa concatenada no email',()=>{
             cy.request({
                 method: "POST",
                 url: '/api/users',
@@ -375,7 +375,7 @@ it.only('deve ser possível registrar usuário com email com 5 dígitos', () => 
                     cy.deletaUsuario(id, token);
                 })    
         }),
-        it.only('tentativa de registrar usuário com formato inválido com fonte alternativa em todos os caracteres do no email(menos @ e .)',()=>{
+        it('não deve ser possível registrar usuário com formato inválido com fonte alternativa em todos os caracteres do no email(menos @ e .)',()=>{
             cy.request({
                 method: "POST",
                 url: '/api/users',
@@ -396,7 +396,7 @@ it.only('deve ser possível registrar usuário com email com 5 dígitos', () => 
         }),
 /////////////////////////////////////////////////////////////////////////////////////////
 
-        it('tentativa de registrar usuário com formato inválido com emoji no email ',()=>{
+        it('não deve ser possível registrar usuário com formato inválido com emoji no email ',()=>{
             cy.request({
                 method: "POST",
                 url: '/api/users',
@@ -414,7 +414,7 @@ it.only('deve ser possível registrar usuário com email com 5 dígitos', () => 
                 });
             })
         }),
-        it('tentativa de registrar usuário com formato inválido sem @',()=>{
+        it('não deve ser possível registrar usuário com formato inválido sem @',()=>{
             cy.request({
                 method: "POST",
                 url: '/api/users',
@@ -432,7 +432,7 @@ it.only('deve ser possível registrar usuário com email com 5 dígitos', () => 
                 });
             })
         }),
-        it('tentativa de registrar usuário com formato inválido sem domínio',()=>{
+        it('não deve ser possível registrar usuário com formato inválido sem domínio',()=>{
             cy.request({
                 method: "POST",
                 url: '/api/users',
@@ -450,7 +450,7 @@ it.only('deve ser possível registrar usuário com email com 5 dígitos', () => 
                 });
             })
         }),
-        it('tentativa de registrar usuário com formato inválido sem .com',()=>{
+        it('não deve ser possível registrar usuário com formato inválido sem .com',()=>{
             cy.request({
                 method: "POST",
                 url: '/api/users',
@@ -468,7 +468,7 @@ it.only('deve ser possível registrar usuário com email com 5 dígitos', () => 
                 });
             })
         }),
-        it('tentativa de registrar usuário com email com 4 dígitos',()=>{
+        it('não deve ser possível registrar usuário com email com 4 dígitos',()=>{
             cy.request({
                 method: "POST",
                 url: '/api/users',
@@ -486,7 +486,7 @@ it.only('deve ser possível registrar usuário com email com 5 dígitos', () => 
                 });
             })
         }),
-        it('tentativa de registrar usuário com email com mais de 60 dígitos',()=>{
+        it('não deve ser possível registrar usuário com email com mais de 60 dígitos',()=>{
             cy.request({
                 method: "POST",
                 url: '/api/users',
@@ -504,7 +504,7 @@ it.only('deve ser possível registrar usuário com email com 5 dígitos', () => 
                 });
             })
         }),
-        it('tentativa de registrar usuário com nome com 101 dígitos',()=>{
+        it('não deve ser possível registrar usuário com nome com 101 dígitos',()=>{
             cy.request({
                 method: "POST",
                 url: '/api/users',
@@ -522,7 +522,7 @@ it.only('deve ser possível registrar usuário com email com 5 dígitos', () => 
                 });
             })
         }),
-        it('tentativa de registrar usuário com senha com 5 dígitos',()=>{
+        it('não deve ser possível registrar usuário com senha com 5 dígitos',()=>{
             cy.request({
                 method: "POST",
                 url: '/api/users',
@@ -540,7 +540,7 @@ it.only('deve ser possível registrar usuário com email com 5 dígitos', () => 
                 });
             })
         }),
-        it('tentativa de registrar usuário com senha com 13 dígitos',()=>{
+        it('não deve ser possível registrar usuário com senha com 13 dígitos',()=>{
             cy.request({
                 method: "POST",
                 url: '/api/users',
@@ -560,4 +560,3 @@ it.only('deve ser possível registrar usuário com email com 5 dígitos', () => 
         }),
     ])
 })
-// ⓣⓗⓐⓘⓢⓢ@ⓐⓛⓥⓔⓢ.ⓒⓞⓜ

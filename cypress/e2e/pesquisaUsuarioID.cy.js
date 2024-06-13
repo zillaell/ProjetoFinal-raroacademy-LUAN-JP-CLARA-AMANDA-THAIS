@@ -8,13 +8,9 @@ describe('Cenários de testes de Pesquisar usuário por ID', () => {
     var type;
     var token;
     var token1;
-    var token2;
-    var token3;
     var id;
-    var id0;
     var id1;
     var id2;
-    var id3;
     var emaill;
     var nomex = 'Mockador';
 
@@ -36,6 +32,10 @@ describe('Cenários de testes de Pesquisar usuário por ID', () => {
                 expect(response.body).to.be.empty;
                 expect(response.status).to.eq(204);
             });
+            cy.deletaUsuario(id1, token).then((response)=>{
+                expect(response.body).to.be.empty;
+                expect(response.status).to.eq(204);
+            });
             cy.deletaUsuario(id2, token).then((response)=>{
                 expect(response.body).to.be.empty;
                 expect(response.status).to.eq(204);
@@ -43,23 +43,17 @@ describe('Cenários de testes de Pesquisar usuário por ID', () => {
         })
     })
     context('Cenários de Pesquisar usuário por ID com sucesso', () => {
-        // afterEach(()=>{
-        //     cy.deletaUsuario(id1, token).then((response)=>{
-        //         expect(response.body).to.be.empty;
-        //         expect(response.status).to.eq(204);
-        //     });
-        // })
         it('deve ser possível acessar a Pesquisar usuário por ID sendo um usuário do tipo admin',()=>{
-            cy.registroUser(nome, '1'+ email, senha).then((Usuario)=>{
+            cy.registroUser(nome, email, senha).then((Usuario)=>{
                 id1 = Usuario.body.id;
-                cy.logarUser('1'+ email, senha).then((usuario) => {
-                    token = usuario.body.accessToken;
-                    cy.promoverAdmin(token);
+                cy.logarUser( email, senha).then((usuario) => {
+                    token1 = usuario.body.accessToken;
+                    cy.promoverAdmin(token1);
                     cy.request({
                         method: 'GET',
                         url: '/api/users/' + id,
                         headers: {
-                            Authorization: 'Bearer ' + token
+                            Authorization: 'Bearer ' + token1
                         }
                     }).then((response) => {
                         expect(response.status).to.be.eq(200)
@@ -72,16 +66,16 @@ describe('Cenários de testes de Pesquisar usuário por ID', () => {
                         expect(response.body.name).to.eq(nomex);
                         expect(response.body.email).to.eq(emaill);
                         expect(response.body.type).to.eq(type);
-                        expect(response.body.id).to.not.eq(id0);    
+                        expect(response.body.id).to.not.eq(id1);    
                     })
                 })
             })
         })
         it('deve ser possível achar o proprio usuário na pesquisa por ID sendo um usuário do tipo admini',()=>{
-            cy.registroUser(nome, '1.1'+ email, senha).then((Usuario)=>{
+            cy.registroUser(nome, email, senha).then((Usuario)=>{
                 id1 = Usuario.body.id;
                 type = Usuario.body.type;
-                cy.logarUser('1.1'+ email, senha).then((usuario) => {
+                cy.logarUser(email, senha).then((usuario) => {
                     token1 = usuario.body.accessToken;
                     cy.promoverAdmin(token1);
                     cy.request({
@@ -99,7 +93,7 @@ describe('Cenários de testes de Pesquisar usuário por ID', () => {
                         expect(response.body).to.have.property('active');
                         expect(response.body.id).to.eq(id1);
                         expect(response.body.name).to.eq(nome);
-                        expect(response.body.email).to.eq('1.1'+ email);
+                        expect(response.body.email).to.eq(email);
                         expect(response.body.type).to.eq(1);
                         expect(response.body.id).to.not.eq(id);    
                     })
@@ -107,10 +101,10 @@ describe('Cenários de testes de Pesquisar usuário por ID', () => {
             })
         })
         it('deve ser possível achar o proprio usuário na pesquisa por ID sendo um usuário do tipo critico',()=>{
-            cy.registroUser(nome, '1.3'+ email, senha).then((Usuario)=>{
+            cy.registroUser(nome, email, senha).then((Usuario)=>{
                 id1 = Usuario.body.id;
                 type = Usuario.body.type;
-                cy.logarUser('1.3'+ email, senha).then((usuario) => {
+                cy.logarUser(email, senha).then((usuario) => {
                     token1 = usuario.body.accessToken;
                     cy.promoverCritico(token1);
                     cy.request({
@@ -128,7 +122,7 @@ describe('Cenários de testes de Pesquisar usuário por ID', () => {
                         expect(response.body).to.have.property('active');
                         expect(response.body.id).to.eq(id1);
                         expect(response.body.name).to.eq(nome);
-                        expect(response.body.email).to.eq('1.3'+ email);
+                        expect(response.body.email).to.eq(email);
                         expect(response.body.type).to.eq(2);
                         expect(response.body.id).to.not.eq(id);    
                     })
@@ -136,10 +130,10 @@ describe('Cenários de testes de Pesquisar usuário por ID', () => {
             })
         })
         it('deve ser possível achar o proprio usuário na pesquisa por ID sendo um usuário do tipo comum',()=>{
-            cy.registroUser(nome, '1.6'+ email, senha).then((Usuario)=>{
+            cy.registroUser(nome, email, senha).then((Usuario)=>{
                 id1 = Usuario.body.id;
                 type = Usuario.body.type;
-                cy.logarUser('1.6'+ email, senha).then((usuario) => {
+                cy.logarUser(email, senha).then((usuario) => {
                     token1 = usuario.body.accessToken;
                     cy.request({
                         method: 'GET',
@@ -156,7 +150,7 @@ describe('Cenários de testes de Pesquisar usuário por ID', () => {
                         expect(response.body).to.have.property('active');
                         expect(response.body.id).to.eq(id1);
                         expect(response.body.name).to.eq(nome);
-                        expect(response.body.email).to.eq('1.6'+ email);
+                        expect(response.body.email).to.eq(email);
                         expect(response.body.type).to.eq(0);
                         expect(response.body.id).to.not.eq(id);    
                     })
@@ -164,16 +158,16 @@ describe('Cenários de testes de Pesquisar usuário por ID', () => {
             })
         })
         it('deve ser possível o retorno 200 mesmo sem achar outros usuário na pesquisa por ID sendo um usuário do tipo admin',()=>{
-            cy.registroUser(nome, '1.9'+ email, senha).then((Usuario)=>{
+            cy.registroUser(nome, email, senha).then((Usuario)=>{
                 id1 = Usuario.body.id;
-                cy.logarUser('1.9'+ email, senha).then((usuario) => {
-                    token = usuario.body.accessToken;
-                    cy.promoverAdmin(token);
+                cy.logarUser(email, senha).then((usuario) => {
+                    token1 = usuario.body.accessToken;
+                    cy.promoverAdmin(token1);
                     cy.request({
                         method: 'GET',
                         url: '/api/users/' + 0,
                         headers: {
-                            Authorization: 'Bearer ' + token
+                            Authorization: 'Bearer ' + token1
                         }
                     }).then((response) => {
                         expect(response.status).to.be.eq(200)
@@ -185,16 +179,16 @@ describe('Cenários de testes de Pesquisar usuário por ID', () => {
     })
     describe('Cenários de BAD REQUEST',()=>{
         it('não deve ser possível acessar o Pesquisar outro usuário por ID sendo um usuário do tipo comum',()=>{
-            cy.registroUser(nome,'2'+ email, senha).then((Usuario)=>{
-                id2= Usuario.body.id;
+            cy.registroUser(nome,'1'+ email, senha).then((Usuario)=>{
+                id1= Usuario.body.id;
             })
-            cy.logarUser('2'+ email, senha).then((usuario) => {
-                token2 = usuario.body.accessToken;
+            cy.logarUser('1'+ email, senha).then((usuario) => {
+                token1 = usuario.body.accessToken;
                 cy.request({
                     method: 'GET',
                     url: '/api/users/' + id,
                     headers: {
-                        Authorization: 'Bearer ' + token2
+                        Authorization: 'Bearer ' + token1
                     },
                     failOnStatusCode: false
                 }).then((response) => {
@@ -207,17 +201,17 @@ describe('Cenários de testes de Pesquisar usuário por ID', () => {
             })
         })
         it('não deve ser possível acessar o Pesquisar outro usuários por ID sendo um usuário do tipo crítico',()=>{
-            cy.registroUser(nome,'3'+ email, senha).then((Usuario)=>{
-                id3 = Usuario.body.id;
+            cy.registroUser(nome,'1'+ email, senha).then((Usuario)=>{
+                id1 = Usuario.body.id;
             })
-            cy.logarUser('3'+ email, senha).then((usuario) => {
-                token3 = usuario.body.accessToken;
-                cy.promoverCritico(token3);
+            cy.logarUser('1'+ email, senha).then((usuario) => {
+                token1 = usuario.body.accessToken;
+                cy.promoverCritico(token1);
                 cy.request({
                     method: 'GET',
                     url: '/api/users/' + id,
                     headers: {
-                        Authorization: 'Bearer ' + token3
+                        Authorization: 'Bearer ' + token1
                     },
                     failOnStatusCode: false
                 }).then((response) => {
@@ -230,20 +224,20 @@ describe('Cenários de testes de Pesquisar usuário por ID', () => {
             })
         })
         it('não deve ser possível acessar o Pesquisar outro usuario por id sem estar autenticado',()=>{
-            cy.registroUser(nome,'4'+ email, senha).then((Usuario)=>{
-                id3 = Usuario.body.id;
+            cy.registroUser(nome, email, senha).then((Usuario)=>{
+                id1 = Usuario.body.id;
                 cy.request({
                     method: 'GET',
                     url: '/api/users/' + id,
                     headers: {
-                        Authorization: 'Bearer ' + token3
+                        Authorization: 'Bearer ' + token1 
                     },
                     failOnStatusCode: false
                 }).then((response) => {
-                    expect(response.status).to.be.eq(403)
+                    expect(response.status).to.be.eq(401)
                     expect(response.body).to.be.an('object');
-                    cy.fixture('forbidden.json').then(function (forbidden) {
-                        expect(response.body).to.deep.eq(forbidden)
+                    cy.fixture('unauthorized.json').then(function (unauthorized) {
+                        expect(response.body).to.deep.eq(unauthorized)
                     });
                 })
             })
