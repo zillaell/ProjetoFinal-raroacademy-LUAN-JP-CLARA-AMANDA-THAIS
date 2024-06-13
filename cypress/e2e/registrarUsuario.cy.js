@@ -6,12 +6,15 @@ registroUsuario.email = fakerPT_BR.internet.email().toLowerCase();
 const primeiroNome  = faker.person.firstName();
 const grandeEmail = faker.string.alpha({ length: { min: 50, max: 50 } })
 
-describe('teste da rota de registro de usuário', () => {
+describe('testes da rota de registro de usuário', () => {
     var nome = 'Zillaell';
     var email = fakerPT_BR.internet.email().toLowerCase();    ;
     var senha = '123456';
+    var id;
+    var idZ;
+    var token;
   
-    context('teste de registro de usuário', () => {
+    context('testes de registro de usuário', () => {
         it('registro de usuário', () => {
             cy.request({
                 method: "POST",
@@ -42,7 +45,6 @@ describe('teste da rota de registro de usuário', () => {
             }).then((response) => {
                 expect(response.status).to.be.eq(201)
                 expect(response.body).to.have.property('type')
-                expect(response.body).to.have.property('type')
                 expect(response.body.type).to.equal(0)
                 //0 = comum, 1 = admin, 2 = crítico;
                 expect(response.body).to.have.property('active')
@@ -66,7 +68,6 @@ describe('teste da rota de registro de usuário', () => {
                 expect(response.body).to.have.property('email')
                 expect(response.body.email).to.equal('2'+ registroUsuario.email)
                 expect(response.body).to.have.property('type')
-                expect(response.body).to.have.property('type')
                 expect(response.body.type).to.equal(0)
                 expect(response.body).to.have.property('active')
                 expect(response.body.active).to.equal(true)
@@ -88,7 +89,6 @@ describe('teste da rota de registro de usuário', () => {
                 expect(response.body.name).to.equal(registroUsuario.name + "♞👽")
                 expect(response.body).to.have.property('email')
                 expect(response.body.email).to.equal('3'+ registroUsuario.email)
-                expect(response.body).to.have.property('type')
                 expect(response.body).to.have.property('type')
                 expect(response.body.type).to.equal(0)
                 expect(response.body).to.have.property('active')
@@ -112,7 +112,6 @@ describe('teste da rota de registro de usuário', () => {
                 expect(response.body).to.have.property('email')
                 expect(response.body.email).to.equal("悲しみ" + registroUsuario.email)
                 expect(response.body).to.have.property('type')
-                expect(response.body).to.have.property('type')
                 expect(response.body.type).to.equal(0)
                 expect(response.body).to.have.property('active')
                 expect(response.body.active).to.equal(true)
@@ -135,12 +134,35 @@ describe('teste da rota de registro de usuário', () => {
                 expect(response.body).to.have.property('email')
                 expect(response.body.email).to.equal("4"+ registroUsuario.email)
                 expect(response.body).to.have.property('type')
-                expect(response.body).to.have.property('type')
                 expect(response.body.type).to.equal(0)
                 expect(response.body).to.have.property('active')
                 expect(response.body.active).to.equal(true)
             })
         })
+/////////////////////////////////////////BUG/////////////////////////////////////////////
+it.only('deve ser possível registrar usuário com email com 5 dígitos', () => {
+    cy.request({
+        method: "POST",
+        url: '/api/users',
+        body: {
+            "name": registroUsuario.name,
+            "email": "s@q.c",
+            "password": "1234567"
+          }              
+    }).then((response) => {
+        expect(response.status).to.be.eq(201)
+        expect(response.body).to.have.property('id')
+        expect(response.body).to.have.property('name')
+        expect(response.body.name).to.equal(registroUsuario.name)
+        expect(response.body).to.have.property('email')
+        expect(response.body).to.have.property('type')
+        expect(response.body.type).to.equal(0)
+        expect(response.body).to.have.property('active')
+        expect(response.body.active).to.equal(true)
+    })
+})
+/////////////////////////////////////////////////////////////////////////////////////////
+
         it('tentativa de registrar usuário com email com 60 dígitos', () => {
             cy.request({
                 method: "POST",
@@ -157,7 +179,6 @@ describe('teste da rota de registro de usuário', () => {
                 expect(response.body.name).to.equal(registroUsuario.name)
                 expect(response.body).to.have.property('email')
                 //expect(response.body.email).to.equal(grandeEmail + "tes@qa.com")
-                expect(response.body).to.have.property('type')
                 expect(response.body).to.have.property('type')
                 expect(response.body.type).to.equal(0)
                 expect(response.body).to.have.property('active')
@@ -181,7 +202,6 @@ describe('teste da rota de registro de usuário', () => {
                 expect(response.body).to.have.property('email')
                 expect(response.body.email).to.equal("5"+ registroUsuario.email)
                 expect(response.body).to.have.property('type')
-                expect(response.body).to.have.property('type')
                 expect(response.body.type).to.equal(0)
                 expect(response.body).to.have.property('active')
                 expect(response.body.active).to.equal(true)
@@ -203,7 +223,6 @@ describe('teste da rota de registro de usuário', () => {
                 expect(response.body.name).to.equal(grandeEmail + grandeEmail)
                 expect(response.body).to.have.property('email')
                 expect(response.body.email).to.equal("6"+ registroUsuario.email)
-                expect(response.body).to.have.property('type')
                 expect(response.body).to.have.property('type')
                 expect(response.body.type).to.equal(0)
                 expect(response.body).to.have.property('active')
@@ -227,7 +246,6 @@ describe('teste da rota de registro de usuário', () => {
                 expect(response.body).to.have.property('email')
                 expect(response.body.email).to.equal("7"+ registroUsuario.email)
                 expect(response.body).to.have.property('type')
-                expect(response.body).to.have.property('type')
                 expect(response.body.type).to.equal(0)
                 expect(response.body).to.have.property('active')
                 expect(response.body.active).to.equal(true)
@@ -249,7 +267,6 @@ describe('teste da rota de registro de usuário', () => {
                 expect(response.body.name).to.equal(grandeEmail)
                 expect(response.body).to.have.property('email')
                 expect(response.body.email).to.equal("8"+ registroUsuario.email)
-                expect(response.body).to.have.property('type')
                 expect(response.body).to.have.property('type')
                 expect(response.body.type).to.equal(0)
                 expect(response.body).to.have.property('active')
@@ -328,7 +345,7 @@ describe('teste da rota de registro de usuário', () => {
                 });
             })
         }),
-        it('tentativa de registrar usuário com formato inválido com fonte alternativa no email',()=>{
+        it('tentativa de registrar usuário com formato inválido com fonte alternativa concatenada no email',()=>{
             cy.request({
                 method: "POST",
                 url: '/api/users',
@@ -346,6 +363,39 @@ describe('teste da rota de registro de usuário', () => {
                 });
             })
         }),
+/////////////////////////////////////////BUG/////////////////////////////////////////////        
+        after(()=>{
+            cy.registroUser(nome,'zi'+email,senha) .then((response)=>{
+                     id = response.body.id;                     
+                });
+                cy.logarUser('zi'+email, senha).then((usuario) => {
+                    token = usuario.body.accessToken;
+                    cy.promoverAdmin(token);
+                    cy.deletaUsuario(idZ, token);
+                    cy.deletaUsuario(id, token);
+                })    
+        }),
+        it.only('tentativa de registrar usuário com formato inválido com fonte alternativa em todos os caracteres do no email(menos @ e .)',()=>{
+            cy.request({
+                method: "POST",
+                url: '/api/users',
+                body: {
+                    "name": registroUsuario.name,
+                    "email": "ⓣⓗⓘⓢⓢ@ⓐⓛⓥⓔⓢ.ⓒⓞⓜ",
+                    "password": "1234567"
+                  } ,
+                failOnStatusCode: false
+            }).then((response) => {
+                idZ = response.body.id
+                expect(response.status).to.be.eq(400);
+                expect(response.body).to.be.an('object');
+                cy.fixture('emailInvalido.json').then(function (emailInvalido) {
+                  expect(response.body).to.deep.eq(emailInvalido)
+                });
+            })
+        }),
+/////////////////////////////////////////////////////////////////////////////////////////
+
         it('tentativa de registrar usuário com formato inválido com emoji no email ',()=>{
             cy.request({
                 method: "POST",
@@ -510,3 +560,4 @@ describe('teste da rota de registro de usuário', () => {
         }),
     ])
 })
+// ⓣⓗⓐⓘⓢⓢ@ⓐⓛⓥⓔⓢ.ⓒⓞⓜ

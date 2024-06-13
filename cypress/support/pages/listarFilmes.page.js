@@ -70,6 +70,9 @@ export default class ListarFilmesPage {
     clickMovieCard() {
         cy.get(this.movieCard).should('be.visible').eq(0).click();
     }
+    clickMovieCardTop() {
+        cy.get(this.movieCardTop).should('be.visible').eq(0).click();
+    }
     inspecionaMovieCard() {
         cy.get(this.movieCard).should('be.visible');
         cy.get(this.titulo).should('be.visible');

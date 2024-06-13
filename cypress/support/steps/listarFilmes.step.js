@@ -77,12 +77,28 @@ Then('deve ser possível explorar os filmes bem avaliados em outra paginação',
     paginaListarFilmes.clickAvancaBA();
     paginaListarFilmes.inspecionaMoviesTop();
 });
-// 08: deve ser possível consultar mais detalhes de um filme
-When('escolher um filme para saber detalhes',()=>{
+// 08: deve ser possível consultar mais detalhes de um filme em destaque
+When('escolher um filme em destaque para saber detalhes',()=>{
     paginaListarFilmes.clickMovieCard();
 });
-Then('deve ser possível ver os detalhes do filme',()=>{
-    cy.url('').should('equal','https://raromdb-frontend-c7d7dc3305a0.herokuapp.com/movies/');
+Then('deve ser possível ver os detalhes do filme em destaque',()=>{
+    cy.url('').should('equal','https://raromdb-frontend-c7d7dc3305a0.herokuapp.com/movies/1');
+    cy.get(paginaListarFilmes.movieTitle);
+    cy.get(paginaListarFilmes.avaliacaoAudiencia).should('be.visible');
+    cy.get(paginaListarFilmes.avaliacaoCritica).should('be.visible');
+    cy.get(paginaListarFilmes.movieDescription)
+    cy.get(paginaListarFilmes.movieData).should('be.visible');
+    cy.get(paginaListarFilmes.movieGenero).should('be.visible');
+    cy.get(paginaListarFilmes.movieTempo).should('be.visible');
+    cy.get(paginaListarFilmes.movieImagem).should('be.visible');
+    //paginaListarFilmes.inspecionaDetalhes();
+});
+// 09: deve ser possível consultar mais detalhes de um filme bem avaliado
+When('escolher um filme bem avaliado para saber detalhes',()=>{
+    paginaListarFilmes.clickMovieCardTop();
+});
+Then('deve ser possível ver os detalhes do filme bem avaliado',()=>{
+    cy.url('').should('equal','https://raromdb-frontend-c7d7dc3305a0.herokuapp.com/movies/26');
     cy.get(paginaListarFilmes.movieTitle);
     cy.get(paginaListarFilmes.avaliacaoAudiencia).should('be.visible');
     cy.get(paginaListarFilmes.avaliacaoCritica).should('be.visible');

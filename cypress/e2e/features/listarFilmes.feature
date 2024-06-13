@@ -46,11 +46,18 @@ Cenário: deve ser possível visualizar o Listar filmes bem avaliados e explora-
   Então deve ser possível Listar Filmes 
   E deve ser possível explorar os filmes bem avaliados em outra paginação
 
-Cenário: deve ser possível consultar mais detalhes de um filme
+Cenário: deve ser possível consultar mais detalhes de um filme em destaque
+  Dado que está autenticado no site
+  Quando acessa a funcionalidade de Listar Filmes 
+  E escolher um filme em destaque para saber detalhes
+  Então deve ser possível ver os detalhes do filme em destaque
+
+Cenário: deve ser possível consultar mais detalhes de um filme bem avaliado
   Dado que está autenticado no site
   Quando acessa a funcionalidade de Listar Filmes
-  E escolher um filme para saber detalhes
-  Então deve ser possível ver os detalhes do filme
+  E escolher um filme bem avaliado para saber detalhes
+  Então deve ser possível ver os detalhes do filme bem avaliados
+
 
 #################### BAD REQUEST ###################################
 

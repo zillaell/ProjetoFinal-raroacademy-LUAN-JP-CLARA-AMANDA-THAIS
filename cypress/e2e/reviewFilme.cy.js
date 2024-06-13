@@ -156,6 +156,7 @@ describe('Cenários de testes de Review de Filme', () => {
                 })
             })
         })
+/////////////////////////////////////////BUG/////////////////////////////////////////////
         it('deve ser possível fazer review de filme somente com nota', () => {
             cy.registroUser(nomex, '2' + emaill, senha).then((response) => {
                 id2 = response.body.id;
@@ -172,7 +173,7 @@ describe('Cenários de testes de Review de Filme', () => {
                     body: {
                         movieId: idFilme,
                         score: 4,
-                        reviewText: " "
+                        reviewText: ""
                     }
                 })
                 cy.buscarFilmeId(idFilme, token2).then((response) => {
@@ -180,12 +181,14 @@ describe('Cenários de testes de Review de Filme', () => {
                     expect(response.body.reviews[0]).to.have.property('reviewText');
                     expect(response.body.reviews[0]).to.have.property('reviewType');
                     expect(response.body.reviews[0]).to.have.property('score');
-                    expect(response.body.reviews[0].reviewText).to.eq(" ");
+                    expect(response.body.reviews[0].reviewText).to.eq("");
                     expect(response.body.reviews[0].score).to.eq(4);
                     expect(response.body.reviews[0].user.id).to.eq(id2);
                 })
             })
         })
+/////////////////////////////////////////////////////////////////////////////////////////
+
         it('deve ser possível fazer review de filme com nota 1', () => {
             cy.registroUser(nomex, '2' + emaill, senha).then((response) => {
                 id2 = response.body.id;
