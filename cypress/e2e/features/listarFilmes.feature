@@ -43,7 +43,7 @@ Cenário: deve ser possível visualizar o Listar filmes bem avaliados e explora-
   Dado que está autenticado no site
   Quando acessa a funcionalidade de Listar Filmes
   E identifica o cabeçario de filmes bem avaliados
-  Então deve ser possível Listar Filmes 
+  Então deve ser possível Listar Filmes bem avaliados 
   E deve ser possível explorar os filmes bem avaliados em outra paginação
 
 Cenário: deve ser possível consultar mais detalhes de um filme em destaque
@@ -56,24 +56,4 @@ Cenário: deve ser possível consultar mais detalhes de um filme bem avaliado
   Dado que está autenticado no site
   Quando acessa a funcionalidade de Listar Filmes
   E escolher um filme bem avaliado para saber detalhes
-  Então deve ser possível ver os detalhes do filme bem avaliados
-
-
-#################### REGRAS DE NEGOCIO ###################################
-
-# 1. Qualquer tipo de usuário, logado ou não, pode consultar a lista de filmes
-# sem restrições;
-
-# 2. Deve ser possível visualizar informações sumarizadas do filme, como
-# título, descrição e nota além de uma imagem de capa que represente o
-# filme ;
-
-# 3. Na versão Web deve ser possível visualizar filmes com duas opções de
-# ordenação: Por ordem de cadastro e por nota (filmes mais avaliados primeiro);
-
-# 4. Na versão Web deve existir uma opção de paginação para que o usuário
-# possa explorar todos os filmes cadastrados;
-
-# 5. O usuário deve conseguir consultar mais detalhes do filme ao interagir com
-# um dos filmes exibidos na listagem.
-
+  Então deve ser possível ver os detalhes do filme bem avaliado

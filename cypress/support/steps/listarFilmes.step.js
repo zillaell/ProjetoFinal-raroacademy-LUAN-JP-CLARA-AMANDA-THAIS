@@ -9,7 +9,6 @@ var id;
 var token;
 var token1;
 var movieid
-//var idFilmeNovo;
 
 before(()=>{
     cy.registroUser(nome, email, senha).then((response)=>{
@@ -18,20 +17,27 @@ before(()=>{
     cy.logarUser(email, senha).then((response)=>{
         token1 = response.body.accessToken;
         cy.promoverAdmin(token1);
-        cy.criarFilme2(token1);
+        cy.criarFilme2(token1).then((response=>{
+            movieid = response.body.id
+        }))
     });
 });
 
 after(()=>{
-    //cy.deleteFilme(movieId, token1);
-    //cy.deletaUsuario(id,token1);
+    cy.deleteFilme(movieid, token1);
+    cy.deletaUsuario(id,token1);
 });
 // 01: deve ser possível Listar Filmes com sucesso sem estar autenticado
 Given('que o usuário acessa o site',()=>{
     cy.intercept('GET', '/api/movies', {
         statusCode: 200,
         fixture: 'variosFilmes.json'
-    }).as('filmesMock');
+    }).as('filmesMock').then((response)=>{
+        cy.intercept('POST', '/api/users/reviews', {
+            statusCode: 201,
+            fixture: 'variasReviews.json'
+        }).as('reviewsMock')
+    })
     cy.visit('');
 });
 When('acessa a funcionalidade de Listar Filmes',()=>{
@@ -73,6 +79,10 @@ Then('deve ser possível explorar os filmes em destaque em outra paginação',()
     paginaListarFilmes.inspecionaMoviesDestaqueP2();
 });
 // 07: deve ser possível visualizar o Listar filmes bem avaliados e explora-los em otra paginação
+Then('deve ser possível Listar Filmes bem avaliados',()=>{
+    cy.wait('@filmesMock');
+    cy.get(paginaListarFilmes.carroselTopFilmes).should('be.visible');
+});
 Then('deve ser possível explorar os filmes bem avaliados em outra paginação',()=>{
     paginaListarFilmes.clickAvancaBA();
     paginaListarFilmes.inspecionaMoviesTop();
@@ -91,14 +101,12 @@ Then('deve ser possível ver os detalhes do filme em destaque',()=>{
     cy.get(paginaListarFilmes.movieGenero).should('be.visible');
     cy.get(paginaListarFilmes.movieTempo).should('be.visible');
     cy.get(paginaListarFilmes.movieImagem).should('be.visible');
-    //paginaListarFilmes.inspecionaDetalhes();
 });
 // 09: deve ser possível consultar mais detalhes de um filme bem avaliado
 When('escolher um filme bem avaliado para saber detalhes',()=>{
     paginaListarFilmes.clickMovieCardTop();
 });
 Then('deve ser possível ver os detalhes do filme bem avaliado',()=>{
-    cy.url('').should('equal','https://raromdb-frontend-c7d7dc3305a0.herokuapp.com/movies/26');
     cy.get(paginaListarFilmes.movieTitle);
     cy.get(paginaListarFilmes.avaliacaoAudiencia).should('be.visible');
     cy.get(paginaListarFilmes.avaliacaoCritica).should('be.visible');
@@ -107,5 +115,4 @@ Then('deve ser possível ver os detalhes do filme bem avaliado',()=>{
     cy.get(paginaListarFilmes.movieGenero).should('be.visible');
     cy.get(paginaListarFilmes.movieTempo).should('be.visible');
     cy.get(paginaListarFilmes.movieImagem).should('be.visible');
-    //paginaListarFilmes.inspecionaDetalhes();
 });

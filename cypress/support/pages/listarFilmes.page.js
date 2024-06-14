@@ -28,7 +28,8 @@ export default class ListarFilmesPage {
     cabecalhoFD = '.featured-movies > .section-header';
     cabecalhoBA = '.top-rated-movies > .section-header';
     carrosselFilmes = '.featured-movies > .carousel-container > .carousel-data';
-    
+    carroselTopFilmes = '.top-rated-movies > .carousel-container > .carousel-data';
+
     movieCard = '[href="/movies/1"] > .movie-card-footer';
     titulo = '[href="/movies/1"] > .movie-card-footer > .movie-title';
     nota = '[href="/movies/1"] > .movie-card-footer > .neutral';
@@ -42,9 +43,10 @@ export default class ListarFilmesPage {
     movieCard6 = '[href="/movies/6"] > .movie-card-footer';
     movieCard7 = '[href="/movies/7"] > .movie-card-footer';
 
-    movieCardTop ='.top-rated-movies .carousel-container .movie-card' 
+    movieCardTop ='.top-rated-movies .carousel-data .movie-card';
     movieCardTopInside ='top-rated-movies .movie-card-footer' 
     EspacoTopMovies = '.top-rated-movies'
+
 
     // PAGINA DE DETALHES DO FILME//
     movieTitle = '.movie-details-title';
@@ -71,7 +73,7 @@ export default class ListarFilmesPage {
         cy.get(this.movieCard).should('be.visible').eq(0).click();
     }
     clickMovieCardTop() {
-        cy.get(this.movieCardTop).should('be.visible').eq(0).click();
+        cy.get(this.movieCardTop).should('be.visible').eq(0).as('btn').click()
     }
     inspecionaMovieCard() {
         cy.get(this.movieCard).should('be.visible');
@@ -119,21 +121,7 @@ export default class ListarFilmesPage {
     clickAvancaBA() {
         cy.get(this.b_AvancarBA).should('be.visible').click();
     }
-    usuarioMocante(){
-        return cy
-        .request('POST','https://raromdb-3c39614e42d4.herokuapp.com/api/users',{
-                "name": "Jotaro",
-                "email": ffakerPT_BR.internet.email().toLowerCase({length: 10}),
-                "password": "123456"
-              }
-         ).then((response)=>{
-            response.body;
-            expect(response.body).to.be.an('object');
-            expect(response.body).have.property('type');
-            expect(response.body.type).to.equal(0);
-            cy.log(response.body.type);
-         });
-    }
+
     filmeMocante(){
         return cy
         .request('POST','https://raromdb-3c39614e42d4.herokuapp.com/api/users',{
