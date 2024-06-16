@@ -2,7 +2,7 @@ import { Given, When, Then } from "@badeball/cypress-cucumber-preprocessor";
 import ListarFilmesPage from "../pages/listarFilmes.page";
 import { faker } from "@faker-js/faker";
 var paginaListarFilmes = new ListarFilmesPage();
-var nome = 'João Pedrin';
+var nome = 'Zillaell';
 var email = faker.internet.email().toLowerCase();
 var senha = '123456';
 var id;
